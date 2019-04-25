@@ -1,4 +1,5 @@
-//!http://smallcultfollowing.com/babysteps/blog/2015/04/06/modeling-graphs-in-rust-using-vector-indices/
+//! http://smallcultfollowing.com/babysteps/blog/2015/04/06/modeling-graphs-in-rust-using-vector-indices/
+//! https://github.com/nikomatsakis/simple-graph
 
 pub struct Graph<T> {
     nodes: Vec<Node<T>>,
@@ -37,13 +38,13 @@ impl<T> Graph<T> {
 
     pub fn add_edge(&mut self, from: NodeIdx, to: NodeIdx) {
         let edge_idx = self.edges.len();
-
+        let node = &mut self.nodes[from.0];
         let edge = Edge {
             target_node: to,
-            next_edge_idx: self.nodes[from.0].first_edge_idx,
+            next_edge_idx: node.first_edge_idx,
         };
         self.edges.push(edge);
-        self.nodes[from.0].first_edge_idx = Some(EdgeIdx(edge_idx));
+        node.first_edge_idx = Some(EdgeIdx(edge_idx));
     }
 
     pub fn successors(&self, node_idx: NodeIdx) -> Successors<T> {
@@ -85,7 +86,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn example() {
+    fn smoke() {
 
         // N0 ---E0---> N1 ---E1---> N2
         // |                         ^
