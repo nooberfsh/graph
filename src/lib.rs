@@ -97,17 +97,17 @@ mod tests {
 
         let mut graph = Graph::new();
 
-        let n0 = graph.add_node(10);
-        let n1 = graph.add_node(8);
-        let n2 = graph.add_node(333);
-        let n3 = graph.add_node(11);
+        let n0 = graph.add_node('A');
+        let n1 = graph.add_node('B');
+        let n2 = graph.add_node('C');
+        let n3 = graph.add_node('D');
 
         graph.add_edge(n0, n1); // e0
         graph.add_edge(n1, n2); // e1
         graph.add_edge(n0, n3); // e2
         graph.add_edge(n3, n2); // e3
 
-        let successors: Vec<i32> = graph.successors(n0).map(|d| *d).collect();
-        assert_eq!(successors, vec![11, 8])
+        let successors: Vec<_> = graph.successors(n0).map(|d| *d).collect();
+        assert_eq!(successors, vec!['D', 'B'])
     }
 }
